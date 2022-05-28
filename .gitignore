@@ -1,0 +1,10 @@
+# created by virtualenv automatically
+bin/
+lib/
+include/
+pyvenv.cfg
+.env
+models/__pycache__/
+__pycache__/
+curd/__pycache__/
+tests/__pycache__/
