@@ -8,3 +8,4 @@ models/__pycache__/
 __pycache__/
 curd/__pycache__/
 tests/__pycache__/
+backup.py

@@ -1,3 +1,7 @@
+import pytest
+from httpx import AsyncClient
+
+
 test_item={
   "ID": 0,
   "UUID_TYPE": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -33,17 +37,24 @@ antother={
   "password": "test123",
   "active": True
 }
-def test_cleint(testing_client):
-    # response =testing_client.post("/test",json=test_item)
-    # assert response.status_code == 200
-    assert testing_client is not None
-def test_table_cleint(testing_client):
-    response =testing_client.post("/test",json=test_item)
-    print(response.json())
-    assert response.status_code == 200
-    # assert testing_client is not None
 
-def test_user_route_cleint(testing_client):
-    response =testing_client.post("/user",json=antother)
-    assert response.status_code != 200
-    # assert testing_client is not None
+@pytest.mark.asyncio
+async def test_testing_table_post(testing_client):
+            """Test case for testing_table_create_post
+
+            testing_table
+            """
+            async with AsyncClient(app=testing_client, base_url="http://test") as client:
+                login_user_model = {"password":"password","grant_type":"authorization_code","username":"Bushu","token":"none"}
+                
+                headers = {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+                response = await client.post(
+                    "/admin/login",
+                    headers={},
+                    json=login_user_model,
+                )
+               
+            assert response.status_code == 500
