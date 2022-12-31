@@ -4,7 +4,7 @@
 from . import *
 ###################################################################################
 
-def get_advanced(raw_query:str ,funcname:str,role_authorization : Callable,current_user :Callable=None,required_roles:List[str]=["none"], get_session : AsyncSession=None):
+def get_advanced(raw_query:str ,funcname:str,role_authorization : Callable,current_user :Callable=None,required_roles:List[str]=["none"], get_session : AsyncSession=None)->Callable:
          get_session=get_session
          async def get_advanced_response(request:Request,current_user:List[str]=Depends(current_user),session : AsyncSession=Depends(get_session)):
               if role_authorization(current_user,required_roles):  

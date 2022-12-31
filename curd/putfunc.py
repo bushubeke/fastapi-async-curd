@@ -5,7 +5,7 @@ from . import *
 from .util import dataclass_to_dic
 ###################################################################################
 
-def put_one(sqlmod : Base, pyMod : BaseModel,role_authorization : Callable,current_user:Callable=None, get_session : AsyncSession=None):
+def put_one(sqlmod : Base, pyMod : BaseModel,role_authorization : Callable,current_user:Callable=None, get_session : AsyncSession=None)->Callable:
      """PUT response CURD response funciton Generator 
 
       Args:

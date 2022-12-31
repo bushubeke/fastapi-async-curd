@@ -5,7 +5,7 @@ from uuid import uuid4
 from . import *
 ###################################################################################
 
-def get_one(sqlmod : Base,role_authorization : Callable,current_user: Callable=None, get_session : AsyncSession=None):
+def get_one(sqlmod : Base,role_authorization : Callable,current_user: Callable=None, get_session : AsyncSession=None)->Callable:
 	"""GET response CURD response funciton Generator (retrives single Object)
 
 	Args:

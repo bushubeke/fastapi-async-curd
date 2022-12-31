@@ -31,7 +31,7 @@ class SQLAlchemyCURD:
         if self.app is not None and self.engine is not None:
             self.init_app(app,session,engine)
      
-    def  init_app(self, app : FastAPI = None,engine : create_async_engine= None):
+    def  init_app(self, app : FastAPI = None,engine : create_async_engine= None)->None:
         """_summary_
 
         Args:
@@ -42,6 +42,7 @@ class SQLAlchemyCURD:
             self.app = app
             self.engine=engine
             self.session = sessionmaker(engine, expire_on_commit=False,class_=AsyncSession)
+    
     def set_current_user(self,current : List[str])->None:
         """_summary_
 
@@ -55,11 +56,11 @@ class SQLAlchemyCURD:
           async with self.session() as session:
                yield session
     
-    def add_curd(self, modlist,role_auth:Callable=role_authorization):
-        """_summary_
+    def add_curd(self, modlist,role_auth:Callable=role_authorization)->None:
+        """Adding List of SQLalchemy and Pydantic validation model objects
 
         Args:
-            modlist (List[List[Base,BaseModel]): List of sqlalchemy and pydantic models to be utilized for 
+            modlist (List[List[Base,BaseModel,BaseModel]): List of sqlalchemy and pydantic models to be utilized for 
             role_auth (Callable, optional): function that takes two sets of lists and returns boolean value. Defaults to role_authorization function .
         """
         if modlist  is not None :
@@ -76,11 +77,21 @@ class SQLAlchemyCURD:
             xroute.add_api_route(f"/{x[0].tableroute()}/{{item_uuid}}/",delete_res(x[0],get_session=self.get_session,role_authorization=role_auth,current_user=self.current_user), methods=["DELETE"])
     
 
-    def create_get_route(self,route_path,raw_query:str ,funcname : str,required_roles : List[str]=["superuser"],role_auth:Callable=role_authorization,response_mod : BaseModel= None):
+    def create_get_route(self,route_path :str ,raw_query:str ,funcname : str,required_roles : List[str]=["superuser"],role_auth:Callable=role_authorization,response_mod : BaseModel= None):
+        """Creating Heavely Modified get Route
+
+        Args:
+            route_path (str): path to create the get route on
+            raw_query (str): raw sql query to execute
+            funcname (str): name of the callable callback function
+            required_roles (List[str], optional):list of required roles to have access on the created route. Defaults to ["superuser"].
+            role_auth (Callable, optional):a callable function that takes two lists available roles, and provided required roles. Defaults to role_authorization.
+            response_mod (BaseModel, optional): pydantic basemodel to parse response with. Defaults to None.
+        """
         xroute=self.curdroute
         xroute.add_api_route(f"/{route_path}", get_advanced(raw_query=raw_query,funcname=funcname,role_authorization=role_auth,current_user=self.current_user,required_roles=required_roles,get_session=self.get_session),response_model=response_mod,methods=["GET"])
     
-    def include_apirouter(self,prefix:str="/"):
+    def include_apirouter(self,prefix:str="/")->None:
         """Mouting sqlalchemycurd Object API router
 
         Args:

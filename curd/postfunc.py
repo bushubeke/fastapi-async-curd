@@ -6,7 +6,7 @@ from . import *
 from .util import dataclass_to_dic
 ###################################################################################
 
-def post_one(sqlmod : Base, pyMod : BaseModel,role_authorization : Callable, current_user : Callable,get_session : AsyncSession=None ):
+def post_one(sqlmod : Base, pyMod : BaseModel,role_authorization : Callable, current_user : Callable,get_session : AsyncSession=None )->Callable:
       """POST response CURD response funciton Generator 
 
       Args:

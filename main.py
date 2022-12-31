@@ -8,11 +8,12 @@ from typing import Optional
 from models.dbconnect import asyncengine,async_main,droptables
 from models.dbmodels import TestingDataTypes,TestingTableModel,TestingTablePostModel
 from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
-from json import  dumps as jsondumps,load as jsonload,JSONDecoder
+from json import  dumps as jsondumps,JSONDecoder
 from passlib.hash import pbkdf2_sha512
 from datetime import datetime,timedelta
 from curd.sqlcurd import SQLAlchemyCURD
 from models.config import settings
+
 capp = typer.Typer()
 sqlcurd= SQLAlchemyCURD()
 

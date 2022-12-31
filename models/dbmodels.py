@@ -81,6 +81,3 @@ class TestingTablePostModel(BaseModel):
     class Config:
         orm_mode = True
 
-###########################################################################
-    #this is for many to many roles models relationship 
-############################################################################
